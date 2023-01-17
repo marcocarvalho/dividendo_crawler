@@ -1,5 +1,10 @@
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
 AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 3.1
+  NewCops: enable
 
 Style/StringLiterals:
   Enabled: true
@@ -9,5 +14,25 @@ Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
 
+Style/Documentation:
+  Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: literal
+
 Layout/LineLength:
   Max: 120
+  AllowURI: true
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    "%w": "()"
+    "%W": "()"
+    "%i": "()"
+    "%I": "()"
+
+Style/FormatStringToken:
+  EnforcedStyle: template

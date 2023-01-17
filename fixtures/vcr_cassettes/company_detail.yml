@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sistemaswebb3-listados.b3.com.br/listedCompaniesProxy/CompanyCall/GetDetail/eyJsYW5ndWFnZSI6InB0LWJyIiwiY29kZUNWTSI6IjI1MDcwIn0=
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-type:
+      - text/plain; charset=utf-8
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      content-security-policy:
+      - 'default-src ''self'' https://*.google-analytics.com; font-src ''self'' data:
+        https://fonts.gstatic.com/ ;img-src * data: ; script-src ''unsafe-eval'' *
+        ''unsafe-inline''; style-src * ''unsafe-inline''; frame-src http://*.b3.com.br
+        https://*.b3.com.br https://s.tradingview.com/'
+      referrer-policy:
+      - strict-origin
+      server-timing:
+      - dtSInfo;desc="0", dtRpid;desc="658090308"
+      set-cookie:
+      - dtCookie=v_4_srv_27_sn_C22E67A099D6BC8DCEECAF8945368F9A_perc_100000_ol_0_mul_1_app-3A2fa0c7805985f6bf_1_rcs-3Acss_0;
+        Path=/; Domain=.b3.com.br, TS01871345=011d592ce10e11731001ce40e1bcb3c4368950128dca5f56ed3c3bd4ff3f720f6afc7ddbbc6897a543258bea8eb6b1742cd27116ad;
+        Path=/; HTTPOnly, TS0134a800=011d592ce10e11731001ce40e1bcb3c4368950128dca5f56ed3c3bd4ff3f720f6afc7ddbbc6897a543258bea8eb6b1742cd27116ad;
+        path=/; domain=.b3.com.br; HTTPonly, BIGipServerpool_sistemaswebb3-listados_8443_WAF=1329140746.64288.0000;
+        path=/; Httponly; Secure
+      date:
+      - Tue, 17 Jan 2023 21:01:26 GMT
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"issuingCompany":"PLPL","companyName":"PLANO & PLANO DESENVOLVIMENTO
+        IMOBILIÁRIO S.A.","tradingName":"PLANOEPLANO","cnpj":"24230275000180","industryClassification":"Consumo
+        Cíclico / Construção Civil / Incorporações","industryClassificationEng":null,"activity":"(i)
+        incorporação. construção e comercialização de empreendimentos imobiliários;
+        (ii) locação de imóveis próprios; (iii) administração de carteira de recebíveis
+        de financiamentos. empréstimos imobiliár","website":"www.planoeplanori.com.br","hasQuotation":null,"status":"A","marketIndicator":"18","market":"NOVO
+        MERCADO","institutionCommon":"ITAU CORRETORA ACOES","institutionPreferred":"","code":"PLPL3","codeCVM":"25070","lastDate":"16/01/2023
+        23:29:49","otherCodes":[{"code":"PLPL3","isin":"BRPLPLACNOR5"}],"hasEmissions":false,"hasBDR":false,"typeBDR":null,"describleCategoryBVMF":null}'
+  recorded_at: Tue, 17 Jan 2023 21:01:27 GMT
+recorded_with: VCR 6.1.0

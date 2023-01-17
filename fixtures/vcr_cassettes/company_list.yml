@@ -1,0 +1,96 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://sistemaswebb3-listados.b3.com.br/listedCompaniesProxy/CompanyCall/GetInitialCompanies/eyJsYW5ndWFnZSI6InB0LWJyIiwicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjEwMDB9
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-length:
+      - '303798'
+      content-type:
+      - application/json; charset=utf-8
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      content-security-policy:
+      - 'default-src ''self'' https://*.google-analytics.com; font-src ''self'' data:
+        https://fonts.gstatic.com/ ;img-src * data: ; script-src ''unsafe-eval'' *
+        ''unsafe-inline''; style-src * ''unsafe-inline''; frame-src http://*.b3.com.br
+        https://*.b3.com.br https://s.tradingview.com/'
+      referrer-policy:
+      - strict-origin
+      server-timing:
+      - dtSInfo;desc="0", dtRpid;desc="-876988160"
+      set-cookie:
+      - dtCookie=v_4_srv_33_sn_19CF9872E76F1353306BF9C0AD054F18_perc_100000_ol_0_mul_1_app-3A2fa0c7805985f6bf_1_rcs-3Acss_0;
+        Path=/; Domain=.b3.com.br, TS01871345=011d592ce13d42d15b1894b4afc20cefbb681417c80d046d5c64e73dba4ca64e7b791764f520ab742c6cff98dcc802b8c975b25faa;
+        Path=/; HTTPOnly, TS0134a800=011d592ce13d42d15b1894b4afc20cefbb681417c80d046d5c64e73dba4ca64e7b791764f520ab742c6cff98dcc802b8c975b25faa;
+        path=/; domain=.b3.com.br; HTTPonly, BIGipServerpool_sistemaswebb3-listados_8443_WAF=1329140746.64288.0000;
+        path=/; Httponly; Secure
+      date:
+      - Tue, 17 Jan 2023 21:02:49 GMT
+    body:
+      encoding: UTF-8
+      string: "{\"page\":{\"pageNumber\":1,\"pageSize\":1000,\"totalRecords\":2351,\"totalPages\":2},\"results\":[{\"codeCVM\":\"917581\",\"issuingCompany\":\"2WAV\",\"companyName\":\"2W
+        ENERGIA S.A.\"}]}"
+  recorded_at: Tue, 17 Jan 2023 21:02:49 GMT
+- request:
+    method: get
+    uri: https://sistemaswebb3-listados.b3.com.br/listedCompaniesProxy/CompanyCall/GetInitialCompanies/eyJsYW5ndWFnZSI6InB0LWJyIiwicGFnZU51bWJlciI6MiwicGFnZVNpemUiOjEwMDB9
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.7.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      content-length:
+      - '304745'
+      content-type:
+      - application/json; charset=utf-8
+      strict-transport-security:
+      - max-age=31536000; includeSubDomains
+      x-xss-protection:
+      - 1; mode=block
+      x-content-type-options:
+      - nosniff
+      content-security-policy:
+      - 'default-src ''self'' https://*.google-analytics.com; font-src ''self'' data:
+        https://fonts.gstatic.com/ ;img-src * data: ; script-src ''unsafe-eval'' *
+        ''unsafe-inline''; style-src * ''unsafe-inline''; frame-src http://*.b3.com.br
+        https://*.b3.com.br https://s.tradingview.com/'
+      referrer-policy:
+      - strict-origin
+      server-timing:
+      - dtSInfo;desc="0", dtRpid;desc="-653803442"
+      set-cookie:
+      - dtCookie=v_4_srv_34_sn_C60ECB1B9EAF394513D1B3C30BFA8E98_perc_100000_ol_0_mul_1_app-3A2fa0c7805985f6bf_1_rcs-3Acss_0;
+        Path=/; Domain=.b3.com.br, TS01871345=011d592ce1658124908108b30e24054a58c40172266fc3af191bf1558316788abcb011bbd2877cfbb32d91bd394aee297697f2a394;
+        Path=/; HTTPOnly, TS0134a800=011d592ce1658124908108b30e24054a58c40172266fc3af191bf1558316788abcb011bbd2877cfbb32d91bd394aee297697f2a394;
+        path=/; domain=.b3.com.br; HTTPonly, BIGipServerpool_sistemaswebb3-listados_8443_WAF=1329140746.64288.0000;
+        path=/; Httponly; Secure
+      date:
+      - Tue, 17 Jan 2023 21:02:49 GMT
+    body:
+      encoding: UTF-8
+      string: "{\"page\":{\"pageNumber\":2,\"pageSize\":1000,\"totalRecords\":2351,\"totalPages\":2},\"results\":[{\"codeCVM\":\"903898\",\"issuingCompany\":\"GCIV\",\"companyName\":\"GAIA
+        CRED IV COMPANHIA  SECURITIZADORA DE CREDITOS\",\"tradingName\":\"GAIACREDIVSE\",\"cnpj\":\"28757881000109\",\"marketIndicator\":\"1\",\"typeBDR\":\"\",\"dateListing\":\"31/12/9999\",\"status\":\"A\",\"segment\":\"Não
+        Classificados\",\"segmentEng\":\"Not Classified\",\"type\":\"7\",\"market\":\"\"}]}"
+  recorded_at: Tue, 17 Jan 2023 21:02:50 GMT
+recorded_with: VCR 6.1.0
