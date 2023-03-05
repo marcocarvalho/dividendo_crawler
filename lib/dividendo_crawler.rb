@@ -51,7 +51,73 @@ require_relative "dividendo_crawler/company"
 require_relative "dividendo_crawler/isin_code"
 require_relative "dividendo_crawler/fii_dividends.rb"
 require_relative "dividendo_crawler/fii_detail.rb"
+require_relative "models/base.rb"
 
+# {"assetIssued"=>"BRHGCRR21M10",
+#   "paymentDate"=>"14/04/2022",
+#   "rate"=>"0,50000000000",
+#   "relatedTo"=>"Março/2022",
+#   "approvedOn"=>"31/03/2022",
+#   "isinCode"=>"BRHGCRR21M10",
+#   "label"=>"RENDIMENTO",
+#   "lastDatePrior"=>"31/03/2022",
+#   "remarks"=>""}
+
+# CREATE TABLE public.tracked_fiis (
+#   id integer NOT NULL,
+#   trading_code text NOT NULL,
+#   isin_code text NOT NULL,
+#   next_approval timestamp
+# );
+
+# CREATE SEQUENCE tracked_fiis_id_seq
+#   AS integer
+#   START WITH 1
+#   INCREMENT BY 1
+#   NO MINVALUE
+#   NO MAXVALUE
+#   CACHE 1;
+
+# ALTER SEQUENCE tracked_fii_id_seq OWNED BY tracked_fiis.id;
+
+# ALTER TABLE ONLY public.tracked_fiis
+#     ADD CONSTRAINT tracked_fiis_pkey PRIMARY KEY (id);
+
+# create index idx_trading_name_tracked_fiis on tracked_fiis (trading_name);
+# create index idx_next_approval_tracked_fiis on tracked_fiis (next_approval);
+
+# CREATE TABLE public.fii_dividends (
+#   id integer NOT NULL,
+#   trading_name text NOT NULL,
+#   payment_at timestamp NOT NULL,
+#   rate numeric NOT NULL,
+#   related_to text NOT NULL,
+#   approved_at timestamp NOT NULL,
+#   isin_code text NOT NULL,
+#   label text NOT NULL,
+#   ex_at timestamp NOT NULL, -- lastDatePrior
+#   remarks text
+# );
+
+# CREATE SEQUENCE fii_dividends_id_seq
+#     AS integer
+#     START WITH 1
+#     INCREMENT BY 1
+#     NO MINVALUE
+#     NO MAXVALUE
+#     CACHE 1;
+
+# ALTER SEQUENCE fii_dividends_id_seq OWNED BY fii_dividends.id;
+
+# ALTER TABLE ONLY public.fii_dividends
+#     ADD CONSTRAINT fii_dividends_pkey PRIMARY KEY (id);
+
+# ALTER TABLE ONLY public.cash_dividends
+#     ADD CONSTRAINT cash_dividends_pkey PRIMARY KEY (id);
+
+# create index idx_trading_name_fii on fii_dividends (trading_name);
+# create index idx_date_fii on cash_dividends (ex_at);
+# create unique index idx_payment_at_trading_name on fii_dividends (payment_at, trading_name);
 
 # CREATE TABLE public.cash_dividends (
 #   id integer NOT NULL,
