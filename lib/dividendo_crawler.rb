@@ -50,6 +50,7 @@ require_relative "dividendo_crawler/companies"
 require_relative "dividendo_crawler/company"
 require_relative "dividendo_crawler/isin_code"
 require_relative "dividendo_crawler/fii_dividends.rb"
+require_relative "dividendo_crawler/fii_detail.rb"
 
 
 # CREATE TABLE public.cash_dividends (

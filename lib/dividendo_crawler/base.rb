@@ -6,7 +6,7 @@ class DividendoCrawler::Base
   end
 
   def self.fetch(...)
-    new.getch(...)
+    new.fetch(...)
   end
 
   def list(prms = {})
@@ -63,7 +63,11 @@ class DividendoCrawler::Base
   end
 
   def base_params
-    {}
+    @base_params ||= {}
+  end
+
+  def merge_params(hash)
+    @base_params = base_params.merge(hash)
   end
 
   def filter(item)
