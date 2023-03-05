@@ -5,6 +5,10 @@ class DividendoCrawler::Base
     new.list(...)
   end
 
+  def self.fetch(...)
+    new.getch(...)
+  end
+
   def list(prms = {})
     page = 1
     result = []
@@ -50,13 +54,13 @@ class DividendoCrawler::Base
   end
 
   def filter(item)
-    return item if allowed_keys.nil?
+    return item if allowed_keys.nil? || allowed_keys == :all
 
     item.slice(*allowed_keys)
   end
 
   def allowed_keys
-    nil
+    :all
   end
 
   def get(prms)

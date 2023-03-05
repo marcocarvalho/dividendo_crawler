@@ -48,6 +48,7 @@ require_relative "dividendo_crawler/base"
 require_relative "dividendo_crawler/cash_dividends"
 require_relative "dividendo_crawler/companies"
 require_relative "dividendo_crawler/company"
+require_relative "dividendo_crawler/isin_code"
 
 
 # CREATE TABLE public.cash_dividends (

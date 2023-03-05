@@ -10,18 +10,19 @@ class DividendoCrawler::CashDividends < DividendoCrawler::Base
   end
 
   def allowed_keys
-    %w(
-      typeStock
-      dateApproval
-      valueCash
-      ratio
-      corporateAction
-      lastDatePriorEx
-      dateClosingPricePriorExDate
-      closingPricePriorExDate
-      quotedPerShares
-      corporateActionPrice
-      lastDateTimePriorEx
-    )
+    return :all
+    # %w(
+    #   typeStock
+    #   dateApproval
+    #   valueCash
+    #   ratio
+    #   corporateAction
+    #   lastDatePriorEx
+    #   dateClosingPricePriorExDate
+    #   closingPricePriorExDate
+    #   quotedPerShares
+    #   corporateActionPrice
+    #   lastDateTimePriorEx
+    # )
   end
 end
