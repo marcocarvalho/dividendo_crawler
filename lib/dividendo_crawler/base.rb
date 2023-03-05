@@ -15,7 +15,12 @@ class DividendoCrawler::Base
 
     loop do
       ps = get(params(page).merge(prms)).body
-      result << filter_results(ps["results"])
+      ps = JSON.parse(ps) if reparse? # some endpoints don't return the correct header
+
+      result << filter_results(ps[result_collection_name])
+
+      break if ps["page"].nil? || ps["page"]["pageNumber"].nil?
+
       page = ps["page"]["pageNumber"] + 1
 
       break if ps["page"]["pageNumber"] >= ps["page"]["totalPages"]
@@ -26,6 +31,14 @@ class DividendoCrawler::Base
 
   def fetch(id)
     filter(JSON.parse(get(params.merge(id_param_name => id)).body))
+  end
+
+  def reparse?
+    false
+  end
+
+  def result_collection_name
+    "results"
   end
 
   def filter_results(results)
