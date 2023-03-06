@@ -52,6 +52,7 @@ require_relative "dividendo_crawler/isin_code"
 require_relative "dividendo_crawler/fii_dividends.rb"
 require_relative "dividendo_crawler/fii_detail.rb"
 require_relative "models/base.rb"
+require_relative "services"
 
 # {"assetIssued"=>"BRHGCRR21M10",
 #   "paymentDate"=>"14/04/2022",
@@ -66,8 +67,8 @@ require_relative "models/base.rb"
 # CREATE TABLE public.tracked_fiis (
 #   id integer NOT NULL,
 #   trading_code text NOT NULL,
-#   isin_code text NOT NULL,
-#   next_approval timestamp
+#   cnpj text not NULL,
+#   next_sync_at timestamp
 # );
 
 # CREATE SEQUENCE tracked_fiis_id_seq
@@ -83,7 +84,9 @@ require_relative "models/base.rb"
 # ALTER TABLE ONLY public.tracked_fiis
 #     ADD CONSTRAINT tracked_fiis_pkey PRIMARY KEY (id);
 
-# create index idx_trading_name_tracked_fiis on tracked_fiis (trading_name);
+# ALTER TABLE ONLY public.tracked_fiis ALTER COLUMN id SET DEFAULT nextval('public.tracked_fiis_id_seq'::regclass);
+
+# create unique index idx_trading_name_tracked_fiis on tracked_fiis (cnpj, trading_code);
 # create index idx_next_approval_tracked_fiis on tracked_fiis (next_approval);
 
 # CREATE TABLE public.fii_dividends (
@@ -107,6 +110,8 @@ require_relative "models/base.rb"
 #     NO MAXVALUE
 #     CACHE 1;
 
+#ALTER TABLE ONLY public.fii_dividends ALTER COLUMN id SET DEFAULT nextval('public.fii_dividends_id_seq'::regclass);
+
 # ALTER SEQUENCE fii_dividends_id_seq OWNED BY fii_dividends.id;
 
 # ALTER TABLE ONLY public.fii_dividends
@@ -117,7 +122,7 @@ require_relative "models/base.rb"
 
 # create index idx_trading_name_fii on fii_dividends (trading_name);
 # create index idx_date_fii on cash_dividends (ex_at);
-# create unique index idx_payment_at_trading_name on fii_dividends (payment_at, trading_name);
+# create unique index idx_payment_at_trading_name on fii_dividends (payment_at, isin_code, trading_name);
 
 # CREATE TABLE public.cash_dividends (
 #   id integer NOT NULL,
@@ -142,6 +147,8 @@ require_relative "models/base.rb"
 #     NO MINVALUE
 #     NO MAXVALUE
 #     CACHE 1;
+
+# ALTER TABLE ONLY public.cash_dividends ALTER COLUMN id SET DEFAULT nextval('public.cash_dividends_id_seq'::regclass);
 
 # ALTER SEQUENCE cash_dividends_id_seq OWNED BY cash_dividends.id;
 

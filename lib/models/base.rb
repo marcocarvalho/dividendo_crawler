@@ -19,3 +19,4 @@ end
 Models::Base.establish_connection
 
 require_relative "tracked_fii"
+require_relative "fii_dividend"
