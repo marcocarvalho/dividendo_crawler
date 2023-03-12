@@ -51,6 +51,7 @@ require_relative "dividendo_crawler/company"
 require_relative "dividendo_crawler/isin_code"
 require_relative "dividendo_crawler/fii_dividends.rb"
 require_relative "dividendo_crawler/fii_detail.rb"
+require_relative "dividendo_crawler/company_comunication_categories.rb"
 require_relative "models/base.rb"
 require_relative "services"
 

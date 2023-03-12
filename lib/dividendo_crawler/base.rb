@@ -15,11 +15,12 @@ class DividendoCrawler::Base
 
     loop do
       ps = get(params(page).merge(prms)).body
+
       ps = JSON.parse(ps) if reparse? # some endpoints don't return the correct header
 
-      result << filter_results(ps[result_collection_name])
+      result << filter_results(result_from_field(ps))
 
-      break if ps["page"].nil? || ps["page"]["pageNumber"].nil?
+      break if !ps.is_a?(Hash) || ps["page"].nil? || ps["page"]["pageNumber"].nil?
 
       page = ps["page"]["pageNumber"] + 1
 
@@ -29,11 +30,21 @@ class DividendoCrawler::Base
     result.flatten
   end
 
+  def result_from_field(response)
+    return response unless result_collection_name.present?
+
+    response[result_collection_name]
+  end
+
   def fetch(id)
     filter(JSON.parse(get(params.merge(id_param_name => id)).body))
   end
 
   def reparse?
+    false
+  end
+
+  def log?
     false
   end
 
@@ -48,6 +59,7 @@ class DividendoCrawler::Base
   def connection
     @connection ||= Faraday.new("https://sistemaswebb3-listados.b3.com.br/") do |f|
       f.request :json # encode req bodies as JSON and automatically set the Content-Type header
+      f.response :logger if log?
       f.response :json # decode response bodies as JSON
     end
   end

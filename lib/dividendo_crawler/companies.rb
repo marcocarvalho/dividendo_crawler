@@ -24,7 +24,7 @@ class DividendoCrawler::Companies < DividendoCrawler::Base
   end
 
   def allowed_keys
-    %w(codeCVM issuingCompany companyName segment market tradingName)
+    %w(codeCVM issuingCompany companyName segment market tradingName cnpj)
   end
 end
 

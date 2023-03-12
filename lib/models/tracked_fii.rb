@@ -10,6 +10,8 @@ class Models::TrackedFii < Models::Base
 
     cnpj, trading_code = details["detailFund"].slice("cnpj", "tradingCode").values
 
+    trading_code = trading_code.strip
+
     upsert({cnpj:, trading_code:, next_sync_at: Time.now}, unique_by: %i(cnpj trading_code))
   end
 
