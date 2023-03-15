@@ -57,7 +57,7 @@ class DividendoCrawler::Base
   end
 
   def connection
-    @connection ||= Faraday.new("https://sistemaswebb3-listados.b3.com.br/") do |f|
+    @connection ||= Faraday.new(url: base_url, headers:) do |f|
       f.request :json # encode req bodies as JSON and automatically set the Content-Type header
       f.response :logger if log?
       f.response :json # decode response bodies as JSON
@@ -94,5 +94,15 @@ class DividendoCrawler::Base
 
   def get(prms)
     connection.get("#{path}#{encode_params(prms)}")
+  end
+
+  private
+
+  def headers = { "User-Agent" => user_agent }
+  def base_url = "https://sistemaswebb3-listados.b3.com.br/"
+
+  # CVM endpoints didn't accept faraday user-agent
+  def user_agent
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"
   end
 end
