@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+return if defined?(Rails)
+
 require "active_record"
 
 class Models
