@@ -10,12 +10,13 @@ RSpec.describe DividendoCrawler::Companies do
           "issuingCompany" => "2WAV"
         },
         {
+          "cnpj" => "28757881000109",
           "codeCVM" => "903898",
           "companyName" => "GAIA CRED IV COMPANHIA  SECURITIZADORA DE CREDITOS",
           "issuingCompany" => "GCIV",
           "market" => "",
           "segment" => "Não Classificados",
-          "tradingName"=>"GAIACREDIVSE"
+          "tradingName" => "GAIACREDIVSE"
         }
       ]
     end
