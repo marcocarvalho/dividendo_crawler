@@ -21,9 +21,9 @@ class DividendoCrawler::RadCVM < DividendoCrawler::Base
     response = new.fetch(url)
 
     if file.respond_to?(:write)
-      file.write(response.body)
+      file.binwrite(response.body)
     else
-      File.write(file, response.body)
+      File.binwrite(file, response.body)
     end
   end
 
