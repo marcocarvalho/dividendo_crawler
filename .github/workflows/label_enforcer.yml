@@ -10,8 +10,13 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
+    - uses: tspascoal/get-user-teams-membership@v2
+      with:
+        username: ${{ github.actor }}
+        team: 'back-end-code-owners'
+        GITHUB_TOKEN: ${{ secrets.CO1_AUTO_APPROVE_TOKEN }} # needs org:read permission
     - uses: actions/labeler@v4
-      if: ${{ github.event.action == 'unlabeled' && github.event.label.name == 'data migration' }}
+      if: ${{ github.event.action == 'unlabeled' && github.event.label.name == 'data migration' && steps.checkUserMember.outputs.isTeamMember == 'false' }}
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
 
