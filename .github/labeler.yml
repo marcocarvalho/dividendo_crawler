@@ -1,0 +1,10 @@
+data migration:
+  - db/**/*
+Waiting for code review:
+  - "**"
+  - ".*"
+  - ".*/**"
+QA needed:
+  - "**"
+  - ".*"
+  - ".*/**"
