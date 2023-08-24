@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/labeler@v4
-      if: ${{ github.event.action == "deleted" && github.event.label.name == "data migration" }}
+      if: ${{ github.event.action == 'deleted' && github.event.label.name == 'data migration' }}
       with:
         repo-token: "${{ secrets.GITHUB_TOKEN }}"
 
