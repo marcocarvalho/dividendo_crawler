@@ -5,6 +5,7 @@ require "base64"
 require "csv"
 require "faraday"
 require "json"
+require "byebug"
 
 class DividendoCrawler
   def self.save_dividends(filter = {})
@@ -36,37 +37,60 @@ class DividendoCrawler
   def self.save_idiv_dividends
     fdividends = File.new("idiv_dividends.csv", "w+")
     fields = %w(
-      codeCVM companyName tradingName segment
-      corporateAction lastDateTimePriorEx closingPricePriorExDate corporateActionPrice
-      quotedPerShares ratio typeStock valueCash
+      companyName tradingName corporateAction lastDateTimePriorEx year closingPricePriorExDate corporateActionPrice
+      ratio typeStock valueCash
     )
-    csv = CSV.new(fdividends, headers: fields)
-    list = IndexComposition.list("IDIV").map { |i| i["asset"] }
-    list.each_with_index do |trading_name, idx|
-      print "#{trading_name} - |#{idx}/#{list.size}|"
-      dividends = CashDividends.list(trading_name)
+    csv = CSV.new(fdividends, headers: fields, quote_char: '"', write_headers: true, force_quotes: true)
+    list = IndexComposition.list("IDIV").map { |i| [i["asset"], i["cod"]] }
+    list.each_with_index do |(company_name, trading_name), idx|
+      print "#{company_name} - |#{idx}/#{list.size}|"
+      dividends = CashDividends.list(company_name)
       puts "#{dividends.count} |#{idx}/#{list.size}|"
 
       dividends.each do |div|
-        dividend_format(div)
-        csv << div.values_at(*fields)
+        idividend_format(div)
+        finalnumber = {
+          "ON" => "3",
+          "PN" => "4",
+          "UNT" => "11",
+          "PNA" => "5",
+          "PNB" => "6",
+        }[div["typeStock"]] || (raise "Invalid typeStock #{div['typeStock']}")
+
+        tname = trading_name.gsub(/\d+/, finalnumber)
+
+        csv << [company_name, tname] + div.values_at(*fields[2..-1])
       rescue NoMethodError => e
         puts div.inspect
         raise
       end
     end
+
+    csv.close
+    fdividends.close
   end
 
   def self.format_number(str)
-    return str unless str.respond_to?(:gsub)
-
-    str&.gsub(",", ".") || "0"
+    if str.is_a?(Numeric)
+      str.to_s.gsub(".", ",")
+    elsif str.is_a?(String)
+      str.gsub(",", "").gsub(".", ",")
+    elsif str.nil?
+      "0"
+    else
+      raise InvalidArgument, "Invalid argument #{str.inspect}"
+    end
   end
 
   def self.dividend_format(div)
-    %w(closingPricePriorExDate corporateActionPrice valueCash).each do |f|
+    %w(closingPricePriorExDate corporateActionPrice ratio valueCash).each do |f|
       div[f] = format_number(div[f])
     end
+  end
+
+  def self.idividend_format(div)
+    dividend_format(div)
+    div["year"] = Time.parse(div["lastDateTimePriorEx"]).year
   end
 end
 

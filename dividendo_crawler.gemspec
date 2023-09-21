@@ -34,6 +34,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "activerecord", "~> 7.0", ">= 7.0.4.2"
   spec.add_dependency "pg", "~> 1.4", ">= 1.4.6"
   spec.add_development_dependency "rspec", "~> 3.12"
+  spec.add_development_dependency "byebug", "~> 11.1"
   spec.add_development_dependency "rubocop-rake", "~> 0.6"
   spec.add_development_dependency "rubocop-rspec", "~> 2.18"
   spec.add_development_dependency "vcr", "~> 6.1.0"
