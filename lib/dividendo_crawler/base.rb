@@ -83,9 +83,23 @@ class DividendoCrawler::Base
   end
 
   def filter(item)
-    return item if allowed_keys.nil? || allowed_keys == :all
+    return format_item(item) if allowed_keys.nil? || allowed_keys == :all
 
-    item.slice(*allowed_keys)
+    format_item(item.slice(*allowed_keys))
+  end
+
+  def format_item(item)
+    item
+  end
+
+  def format_decimal(string)
+    string.gsub(".", "").gsub(",", ".").to_f
+  end
+
+  def to_iso_date(string)
+    return string if string.nil? || string.empty?
+
+    string.split("/").reverse.join("-")
   end
 
   def allowed_keys

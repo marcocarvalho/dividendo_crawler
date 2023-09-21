@@ -33,6 +33,30 @@ class DividendoCrawler
     fdividends.close
   end
 
+  def self.save_idiv_dividends()
+    fdividends = File.new("idiv_dividends.csv", "w+")
+    fields = %w(
+      codeCVM companyName tradingName segment
+      corporateAction lastDateTimePriorEx closingPricePriorExDate corporateActionPrice
+      quotedPerShares ratio typeStock valueCash
+    )
+    csv = CSV.new(fdividends, headers: fields)
+    list = IndexComposition.list.map { |i| i["asset"] }
+    list.each_with_index do |trading_name, idx|
+      print "#{trading_name} - |#{idx}/#{list.size}|"
+      dividends = CashDividends.list(trading_name)
+      puts "#{dividends.count} |#{idx}/#{list.size}|"
+
+      dividends.each do |div|
+        dividend_format(div)
+        csv << div.values_at(*fields)
+      rescue NoMethodError => e
+        puts div.inspect
+        raise
+      end
+    end
+  end
+
   def self.format_number(str)
     str&.gsub(",", ".") || "0"
   end
@@ -54,6 +78,7 @@ require_relative "dividendo_crawler/fii_detail"
 require_relative "dividendo_crawler/company_comunication_categories"
 require_relative "dividendo_crawler/company_comunication_material"
 require_relative "dividendo_crawler/rad_cvm"
+require_relative "dividendo_crawler/index_composition"
 require_relative "models/base"
 require_relative "services"
 
