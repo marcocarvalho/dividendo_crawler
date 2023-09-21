@@ -33,7 +33,7 @@ class DividendoCrawler
     fdividends.close
   end
 
-  def self.save_idiv_dividends()
+  def self.save_idiv_dividends
     fdividends = File.new("idiv_dividends.csv", "w+")
     fields = %w(
       codeCVM companyName tradingName segment
@@ -41,7 +41,7 @@ class DividendoCrawler
       quotedPerShares ratio typeStock valueCash
     )
     csv = CSV.new(fdividends, headers: fields)
-    list = IndexComposition.list.map { |i| i["asset"] }
+    list = IndexComposition.list("IDIV").map { |i| i["asset"] }
     list.each_with_index do |trading_name, idx|
       print "#{trading_name} - |#{idx}/#{list.size}|"
       dividends = CashDividends.list(trading_name)
@@ -58,6 +58,8 @@ class DividendoCrawler
   end
 
   def self.format_number(str)
+    return str unless str.respond_to?(:gsub)
+
     str&.gsub(",", ".") || "0"
   end
 

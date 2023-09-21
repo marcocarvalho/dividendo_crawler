@@ -93,6 +93,8 @@ class DividendoCrawler::Base
   end
 
   def format_decimal(string)
+    return string if string.nil? || string.empty?
+
     string.gsub(".", "").gsub(",", ".").to_f
   end
 

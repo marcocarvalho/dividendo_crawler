@@ -8,8 +8,8 @@ class DividendoCrawler::IndexComposition < DividendoCrawler::Base
     "indexProxy/indexCall/GetPortfolioDay/"
   end
 
-  def self.list
-    new.list(index: "SMLL", segment: "1")
+  def self.list(index = "IDIV")
+    new.list(index:, segment: "1")
   end
 
   def format_item(item)
@@ -24,7 +24,7 @@ class DividendoCrawler::IndexComposition < DividendoCrawler::Base
   end
 end
 
-# https://sistemaswebb3-listados.b3.com.br/listedCompaniesProxy/CompanyCall/GetInitialCompanies/eyJsYW5ndWFnZSI6InB0LWJyIiwicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjIwLCJnb3Zlcm5hbmNlIjoiMTcifQ==
+# https://sistemaswebb3-listados.b3.com.br/indexProxy/indexCall/GetPortfolioDay/eyJsYW5ndWFnZSI6InB0LWJyIiwicGFnZU51bWJlciI6MSwicGFnZVNpemUiOjIwLCJpbmRleCI6IklESVYiLCJzZWdtZW50IjoiMSJ9
 
 __END__
 
