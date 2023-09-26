@@ -2,7 +2,7 @@
 
 class DividendoCrawler::CashDividends < DividendoCrawler::Base
   def self.list(trading_name)
-    new.list(tradingName: trading_name)
+    new.list(tradingName: trading_name.gsub(/\W/, ''))
   end
 
   def path
@@ -23,18 +23,5 @@ class DividendoCrawler::CashDividends < DividendoCrawler::Base
 
   def allowed_keys
     return :all
-    # %w(
-    #   typeStock
-    #   dateApproval
-    #   valueCash
-    #   ratio
-    #   corporateAction
-    #   lastDatePriorEx
-    #   dateClosingPricePriorExDate
-    #   closingPricePriorExDate
-    #   quotedPerShares
-    #   corporateActionPrice
-    #   lastDateTimePriorEx
-    # )
   end
 end

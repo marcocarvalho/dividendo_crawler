@@ -13,4 +13,15 @@ class DividendoCrawler::IsinCode < DividendoCrawler::Base
   def self.fetch(isin_code)
     new.fetch(isin_code)
   end
+
+  def allowed_keys
+    %w(isin
+       emissor
+       especie
+       moeda
+       valorNominal
+       forma
+       descricaoPt
+       tipoEmissao)
+  end
 end

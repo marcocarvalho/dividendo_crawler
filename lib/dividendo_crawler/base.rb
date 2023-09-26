@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class DividendoCrawler::Base
+  attr_accessor :last_params
+
   def self.list(...)
     new.list(...)
   end
@@ -14,7 +16,8 @@ class DividendoCrawler::Base
     result = []
 
     loop do
-      ps = get(params(page).merge(prms)).body
+      @last_params = params(page).merge(prms)
+      ps = get(@last_params).body
 
       ps = JSON.parse(ps) if reparse? # some endpoints don't return the correct header
 

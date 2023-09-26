@@ -19,6 +19,10 @@ class DividendoCrawler::Companies < DividendoCrawler::Base
     "listedCompaniesProxy/CompanyCall/GetInitialCompanies/"
   end
 
+  def list(company = nil)
+    company.nil? ? super : super(company:)
+  end
+
   def self.reduced_list(filter = {})
     list.filter { |i| !["DRE", ""].include?(i["market"]) }
   end

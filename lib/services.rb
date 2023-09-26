@@ -3,6 +3,6 @@
 module Services
 end
 
-Dir[Pathname.new(File.dirname(__FILE__)).join("/services/**/*.rb")].each do |f|
+Dir[Pathname.new(File.dirname(__FILE__)).join("services/**/*.rb")].each do |f|
   require(f)
 end
