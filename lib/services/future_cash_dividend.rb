@@ -8,31 +8,24 @@ class Services::FutureCashDividend
 
   def call
     DividendoCrawler::CashDividends
-    .list(trading_name)
+    .list(ticker:)
     .select { |i|  i["typeStock"] == type_stock && Date.parse(i["lastDatePriorEx"]) >= date }
     .sort_by { |i| Date.parse(i["lastDatePriorEx"]) }
   end
 
-  def trading_name
-    company_information["tradingName"]
-  end
+  def self.idiv_future_dividends(date = Date.today.iso8601, format: :json)
+    raise ArgumentError, "Acceptable formats are: json, csv" unless %i(csv json).include?(format)
 
-  def company_information
-    @company_information ||= begin
-      x = DividendoCrawler::Companies.list(ticker)
-      if x.size == 1
-        x.first
-      else
-        raise NotImplementedError, "Multiple companies found for ticker: #{ticker}"
-      end
-    end
-  end
-
-  def self.idiv_future_dividends(date = Date.today.iso8601)
-    idiv_companies.each_with_object({}) do |ticker, obj|
+    all_div = idiv_companies.each_with_object({}) do |ticker, obj|
       obj[ticker] = new(ticker, date).call
       obj
     end.select { |_, v| v.present? }
+
+    if format == :json
+      all_div
+    elsif format == :csv
+      Services::DividendToCSV.new(all_div).call : all_div
+    end
   end
 
   def type_stock
@@ -59,7 +52,7 @@ class Services::FutureCashDividend
       CPFE3 CPLE3 CPLE6 CSMG3 CSNA3 CXSE3 DIRR3 EGIE3 FESA4 FLRY3 GGBR4 GOAU3 GOAU4
       GRND3 ITSA4 JBSS3 JHSF3 KEPL3 KLBN11 KLBN4 LAVV3 LEVE3 MRFG3 PETR3 PETR4 PSSA3
       RANI3 RAPT4 ROMI3 SANB11 SAPR4 TAEE11 TASA4 TGMA3 TRIS3 TRPL4 UNIP6 USIM5 VALE3
-      VIVT3 WIZC3
+      VIVT3 WIZC3 CLSC4
     )
   end
 end
