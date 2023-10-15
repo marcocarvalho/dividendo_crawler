@@ -13,12 +13,15 @@ class Services::FutureCashDividend
     .sort_by { |i| Date.parse(i["lastDatePriorEx"]) }
   end
 
-  def self.idiv_future_dividends(date = Date.today.iso8601, format: :json)
+  def self.idiv_future_dividends(date = Date.today.iso8601, format: :json, progress: false)
     raise ArgumentError, "Acceptable formats are: json, csv" unless %i(csv json).include?(format)
+
+    progressbar = ProgressBar.create(title: "fetching", total: companies_list.count, format: "%t: |%W| %E") if progress
 
     all_div = companies_list.each_with_object({}) do |ticker, obj|
       obj[ticker] = new(ticker, date).call
       obj
+      progressbar.increment if progress
     end.select { |_, v| v.present? }
 
     if format == :json
@@ -53,7 +56,7 @@ class Services::FutureCashDividend
 
   def self.update_companies_list
     File.open(companies_list_filename, "w+") do |file|
-      file.write(DividendoCrawler::IndexComposition.compile_tickers(%w(ibov idiv IBXX IBRA)).to_json)
+      file.write(JSON.pretty_generate(DividendoCrawler::IndexComposition.compile_tickers(%w(ibov idiv IBXX IBRA))))
     end
   end
 

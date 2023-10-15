@@ -6,6 +6,7 @@ require "csv"
 require "faraday"
 require "json"
 require "byebug"
+require "ruby-progressbar"
 
 class DividendoCrawler
   def self.save_dividends(filter = {})

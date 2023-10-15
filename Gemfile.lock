@@ -5,6 +5,7 @@ PATH
       activerecord (~> 7.0, >= 7.0.4.2)
       faraday (~> 2.7.3)
       pg (~> 1.4, >= 1.4.6)
+      ruby-progressbar (~> 1.13)
 
 GEM
   remote: https://rubygems.org/
@@ -54,7 +55,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.12.0)
     rspec-support (3.12.0)
-    rubocop (1.43.0)
+    rubocop (1.45.1)
       json (~> 2.3)
       parallel (~> 1.10)
       parser (>= 3.2.0.0)
@@ -73,7 +74,7 @@ GEM
     rubocop-rspec (2.18.0)
       rubocop (~> 1.33)
       rubocop-capybara
-    ruby-progressbar (1.11.0)
+    ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
