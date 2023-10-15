@@ -3,6 +3,11 @@
 
 # frozen_string_literal: true
 
+# IBOV
+# IDIV
+# IBXX
+# IBRA
+
 class DividendoCrawler::IndexComposition < DividendoCrawler::Base
   def path
     "indexProxy/indexCall/GetPortfolioDay/"
@@ -10,6 +15,17 @@ class DividendoCrawler::IndexComposition < DividendoCrawler::Base
 
   def self.list(index = "IDIV")
     new.list(index:, segment: "1")
+  end
+
+  def self.compile_tickers(indexes)
+    indexes = Array.wrap(indexes).map { |i| i.to_s.upcase }
+
+    indexes.each_with_object({}) do |index, obj|
+      obj[index] = list(index)
+      obj
+    end.flat_map do |_, v|
+      v.map { |i| i["cod"] }
+    end.uniq.sort
   end
 
   def format_item(item)
