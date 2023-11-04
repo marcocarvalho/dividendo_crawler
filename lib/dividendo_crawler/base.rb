@@ -40,7 +40,10 @@ class DividendoCrawler::Base
   end
 
   def fetch(id)
-    filter(JSON.parse(get(params.merge(id_param_name => id)).body))
+    ret = get({id_param_name => id}.merge(params)).body
+    puts "\n\n\n\n---- #{{id_param_name => id}.merge(params).inspect}"
+    puts ret.inspect
+    filter(JSON.parse(ret))
   end
 
   def reparse?
@@ -93,6 +96,12 @@ class DividendoCrawler::Base
 
   def format_item(item)
     item
+  end
+
+  def format_integer(string)
+    return string if string.nil? || string.empty?
+
+    string.gsub(/\D/, "").to_i
   end
 
   def format_decimal(string)
