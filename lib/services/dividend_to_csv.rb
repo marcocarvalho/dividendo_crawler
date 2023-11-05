@@ -24,16 +24,12 @@ class Services::DividendToCSV
     %w(
       ticker
       typeStock
-      dateApproval
-      valueCash
-      ratio
-      corporateAction
-      lastDatePriorEx
-      dateClosingPricePriorExDate
-      closingPricePriorExDate
-      quotedPerShares
-      corporateActionPrice
-      lastDateTimePriorEx
+      lastDatePrior
+      approvedOn
+      paymentDate
+      rate
+      label
+      relatedTo
     )
   end
 

@@ -40,10 +40,15 @@ class DividendoCrawler::Base
   end
 
   def fetch(id)
-    ret = get({id_param_name => id}.merge(params)).body
-    puts "\n\n\n\n---- #{{id_param_name => id}.merge(params).inspect}"
-    puts ret.inspect
-    filter(JSON.parse(ret))
+    get_params = {id_param_name => id}.merge(params)
+    ret = get(get_params).body
+    begin
+      filter(JSON.parse(ret))
+    rescue JSON::ParserError
+      puts "Error parsing: #{ret}"
+      puts "Params: #{get_params}"
+      raise
+    end
   end
 
   def reparse?

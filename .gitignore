@@ -41,3 +41,4 @@ node_modules
 .byebug_history
 dividends.csv
 .rspec_status
+lib/services/data/*.json

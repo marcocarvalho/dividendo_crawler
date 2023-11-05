@@ -32,6 +32,16 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
     }[type]
   end
 
+  def type_to_type_stock(type)
+    {
+      "OR" => "ON",
+      "PR" => "PN",
+      "UNT" => "UNT",
+      "PA" => "PNA",
+      "PB" => "PNB",
+    }[type]
+  end
+
    # "assetIssued"=>"BRPETRACNPR6",
   # "factor"=>"33,33333333300",
   # "approvedOn"=>"25/03/1994",
@@ -41,7 +51,9 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
   # "remarks"=>""
   def format_stock_dividend(item)
     new_item = { **item }
-    new_item["trading_code"] = asset_issued( new_item["assetIssued"])
+    trading_code, type_stock = asset_issued(new_item["assetIssued"].presence || new_item["isinCode"])
+    new_item["trading_code"] = trading_code
+    new_item["typeStock"] = type_stock
     new_item["multiplier"] = multiplier(new_item["factor"], new_item["label"])
     new_item["factor"] = format_decimal(item["factor"])
     new_item["approvedOn"] = to_iso_date(item["approvedOn"])
@@ -53,7 +65,7 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
     _, code, type = isin.match(/.{2}(.{4}).{3}(.{2})\d/).to_a
     tp = type_to_number(type)
     warn "Unknown type: #{type} from isin code: #{isin}" if tp.nil?
-    "#{code}#{tp}"
+    ["#{code}#{tp}", type_to_type_stock(type)]
   end
 
   def multiplier(factor, label)
@@ -73,7 +85,9 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
   end
 
   def format_subscription(item)
-    item["trading_code"] = asset_issued( item["assetIssued"])
+    trading_code, type_stock = asset_issued(new_item["assetIssued"].presence || new_item["isinCode"])
+    item["trading_code"] = trading_code
+    item["typeStock"] = type_stock
     item["percentage"] = format_decimal(item["percentage"])
     item["priceUnit"] = format_decimal(item["priceUnit"])
     item["subscriptionDate"] = to_iso_date(item["subscriptionDate"])
@@ -94,7 +108,9 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
     item["paymentDate"] = to_iso_date(item["paymentDate"])
     item["approvedOn"] = to_iso_date(item["approvedOn"])
     item["lastDatePrior"] = to_iso_date(item["lastDatePrior"])
-    item["trading_code"] = asset_issued( item["assetIssued"])
+    trading_code, type_stock = asset_issued(new_item["assetIssued"].presence || new_item["isinCode"])
+    item["trading_code"] = trading_code
+    item["typeStock"] = type_stock
     item
   end
 
