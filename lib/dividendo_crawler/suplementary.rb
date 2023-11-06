@@ -22,7 +22,9 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
     items.map { |item| format_stock_dividend(item) }
   end
 
-  def type_to_number(type)
+  def type_to_number(type, asset_type)
+    return "11" if asset_type.upcase == "UNT"
+
     {
       "OR" => "3",
       "PR" => "4",
@@ -32,7 +34,9 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
     }[type]
   end
 
-  def type_to_type_stock(type)
+  def type_to_type_stock(type, asset_type)
+    return "UNT" if asset_type.upcase == "UNT"
+
     {
       "OR" => "ON",
       "PR" => "PN",
@@ -62,10 +66,21 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
   end
 
   def asset_issued(isin)
-    _, code, type = isin.match(/.{2}(.{4}).{3}(.{2})\d/).to_a
-    tp = type_to_number(type)
-    warn "Unknown type: #{type} from isin code: #{isin}" if tp.nil?
-    ["#{code}#{tp}", type_to_type_stock(type)]
+    _, code, asset_type, type = isin.match(/.{2}(.{4})(.{3})(.{2})\d/).to_a
+    tp = type_to_number(type, asset_type)
+    warn "Unknown type: #{type} from isin code: #{isin}" if tp.nil? && !ignore_type?(asset_type)
+    ["#{code}#{tp}", type_to_type_stock(type, asset_type)]
+  end
+
+  def ignore_type?(asset_type)
+    # DEBENTURES MISCELANIAS -> DBM
+    # debenture simples      -> DBS
+    # certificado de depósito de ações -> CDA
+    # DEBENTURES CONVERSIVEIS EM ACOES ORDINARIAS -> DBO
+    # DEBENTURES CONVERSIVEIS EM ACOES PREFERENCIAS -> DBP
+    # CERTIFICADO DE DEPOSITO DE VALORES MOBILIARIOS -> BDR
+    # ?????? -> DCP
+    %w(DBM DBS CDA DBO DBP BDR).include?(asset_type.upcase)
   end
 
   def multiplier(factor, label)
