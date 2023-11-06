@@ -13,6 +13,13 @@ class Services::FutureCashDividend
     .sort_by { |i| Date.parse(i["lastDatePrior"]) }
   end
 
+  def sum(field: "cashDividends", year:)
+    date_range = Date.parse("#{year}-01-01")..Date.parse("#{year}-12-31")
+    load_ticker[field]
+      .select { |i| i["typeStock"] == type_stock && date_range.cover?(Date.parse(i["lastDatePrior"])) }
+      .sum { |i| i["rate"] }
+  end
+
   def cache?
     @cache
   end

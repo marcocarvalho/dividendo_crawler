@@ -54,7 +54,7 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
     trading_code, type_stock = asset_issued(new_item["assetIssued"].presence || new_item["isinCode"])
     new_item["trading_code"] = trading_code
     new_item["typeStock"] = type_stock
-    new_item["multiplier"] = multiplier(new_item["factor"], new_item["label"])
+    new_item["multiplier"] = multiplier(item["factor"], item["label"])
     new_item["factor"] = format_decimal(item["factor"])
     new_item["approvedOn"] = to_iso_date(item["approvedOn"])
     new_item["lastDatePrior"] = to_iso_date(item["lastDatePrior"])
@@ -85,7 +85,7 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
   end
 
   def format_subscription(item)
-    trading_code, type_stock = asset_issued(new_item["assetIssued"].presence || new_item["isinCode"])
+    trading_code, type_stock = asset_issued(item["assetIssued"].presence || item["isinCode"])
     item["trading_code"] = trading_code
     item["typeStock"] = type_stock
     item["percentage"] = format_decimal(item["percentage"])
@@ -108,7 +108,7 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
     item["paymentDate"] = to_iso_date(item["paymentDate"])
     item["approvedOn"] = to_iso_date(item["approvedOn"])
     item["lastDatePrior"] = to_iso_date(item["lastDatePrior"])
-    trading_code, type_stock = asset_issued(new_item["assetIssued"].presence || new_item["isinCode"])
+    trading_code, type_stock = asset_issued(item["assetIssued"].presence || item["isinCode"])
     item["trading_code"] = trading_code
     item["typeStock"] = type_stock
     item
