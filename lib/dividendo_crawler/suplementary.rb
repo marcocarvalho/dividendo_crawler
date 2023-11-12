@@ -31,6 +31,8 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
       "UNT" => "11",
       "PA" => "5",
       "PB" => "6",
+      "PC" => "7",
+      "PD" => "8"
     }[type]
   end
 
@@ -43,6 +45,8 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
       "UNT" => "UNT",
       "PA" => "PNA",
       "PB" => "PNB",
+      "PC" => "PNC",
+      "PD" => "PND"
     }[type]
   end
 
