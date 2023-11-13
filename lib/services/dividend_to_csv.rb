@@ -32,16 +32,4 @@ class Services::DividendToCSV
       relatedTo
     )
   end
-
-  # {"typeStock"=>"PNB",
-  #   "dateApproval"=>"1997-04-30",
-  #   "valueCash"=>0.016242385,
-  #   "ratio"=>1.0,
-  #   "corporateAction"=>"JRS CAP PROPRIO",
-  #   "lastDatePriorEx"=>"1997-04-30",
-  #   "dateClosingPricePriorExDate"=>"1997-04-30",
-  #   "closingPricePriorExDate"=>1.5,
-  #   "quotedPerShares"=>1.0,
-  #   "corporateActionPrice"=>1.082826,
-  #   "lastDateTimePriorEx"=>"1997-04-30T00:00:00"}
 end

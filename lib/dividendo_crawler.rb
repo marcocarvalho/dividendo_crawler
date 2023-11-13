@@ -180,20 +180,20 @@ require_relative "services"
 # create index idx_date_fii on cash_dividends (ex_at);
 # create unique index idx_payment_at_trading_name on fii_dividends (payment_at, isin_code, trading_name);
 
+# drop table public.cash_dividends if exists public.cash_dividends;
+
 # CREATE TABLE public.cash_dividends (
 #   id integer NOT NULL,
-#   code_cvm integer not null,
-#   company_name text not null,
-#   trading_name text not null,
-#   segment text not null,
-#   corporate_action text not null,
-#   ex_at timestamp not null,
-#   ex_closing_price numeric,
-#   corporate_action_price numeric,
-#   quoted_per_shares numeric,
-#   ratio numeric,
+#   approved_on timestamp,
+#   last_date_prior timestamp,
+#   rate numeric not null,
+#   payment_date timestamp NOT NULL,
+#   asset_issued text NOT NULL,
+#   trading_code text not null,
 #   type_stock text not null,
-#   value_cash numeric not null
+#   related_to text,
+#   label text,
+#   remarks text
 # );
 
 # CREATE SEQUENCE cash_dividends_id_seq
@@ -208,7 +208,49 @@ require_relative "services"
 
 # ALTER SEQUENCE cash_dividends_id_seq OWNED BY cash_dividends.id;
 
-# create index idx_cvm_id on cash_dividends (code_cvm)
-# create index idx_date on cash_dividends (ex_at)
+# ALTER TABLE cash_dividends ADD PRIMARY KEY (id);
 
-# (id,code_cvm,company_name,trading_name,segment,corporate_action,ex_at,ex_closing_price,corporate_action_price,quoted_per_shares,ratio,type_stock,value_cash)
+# CREATE UNIQUE INDEX unique_idx_cash_dividend ON cash_dividends (approved_on, asset_issued, trading_code, related_to);
+
+# {:assetIssued=>"BRPETRACNPR6",
+#   :paymentDate=>"2023-01-19",
+#   :rate=>0.074258,
+#   :relatedTo=>"3º Trimestre/2022",
+#   :approvedOn=>"2022-11-03",
+#   :isinCode=>"BRPETRACNPR6",
+#   :label=>"JRS CAP PROPRIO",
+#   :lastDatePrior=>"2022-11-21",
+#   :remarks=>"",
+#   :trading_code=>"PETR4",
+#   :typeStock=>"PN"}
+
+
+# CREATE TABLE public.stock_dividends (
+#   id integer NOT NULL,
+#   approved_on timestamp,
+#   last_date_prior timestamp,
+#   multiplier numeric not null,
+#   factor numeric not null,
+#   asset_issued text NOT NULL,
+#   trading_code text not null,
+#   type_stock text not null,
+#   related_to text,
+#   label text,
+#   remarks text
+# );
+
+# CREATE SEQUENCE stock_dividends_id_seq
+#     AS integer
+#     START WITH 1
+#     INCREMENT BY 1
+#     NO MINVALUE
+#     NO MAXVALUE
+#     CACHE 1;
+
+# ALTER TABLE ONLY public.stock_dividends ALTER COLUMN id SET DEFAULT nextval('public.stock_dividends_id_seq'::regclass);
+
+# ALTER SEQUENCE stock_dividends_id_seq OWNED BY stock_dividends.id;
+
+# ALTER TABLE stock_dividends ADD PRIMARY KEY (id);
+
+# CREATE UNIQUE INDEX unique_idx_stock_dividend ON stock_dividends (approved_on, asset_issued, trading_code, related_to);
