@@ -13,7 +13,7 @@ class Services::SaveToDatabase
       Models::CashDividend.upsert_all_from_raw_data(json["cashDividends"])
       Models::StockDividend.upsert_all_from_raw_data(json["stockDividends"])
       progressbar.increment
-      # File.unlink(file)
+      File.unlink(file)
     end
   end
 
