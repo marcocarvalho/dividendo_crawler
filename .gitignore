@@ -42,3 +42,4 @@ node_modules
 dividends.csv
 .rspec_status
 lib/services/data/*.json
+*.pg.dump

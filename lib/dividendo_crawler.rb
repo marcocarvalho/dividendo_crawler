@@ -233,7 +233,7 @@ require_relative "services"
 #   factor numeric not null,
 #   asset_issued text NOT NULL,
 #   trading_code text not null,
-#   type_stock text not null,
+#   type_stock text,
 #   related_to text,
 #   label text,
 #   remarks text
