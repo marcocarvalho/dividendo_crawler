@@ -3,6 +3,8 @@
 class DividendoCrawler::Base
   attr_accessor :last_params
 
+  class EmptyBodyError < StandardError; end
+
   def self.list(...)
     new.list(...)
   end
@@ -41,11 +43,12 @@ class DividendoCrawler::Base
 
   def fetch(id)
     get_params = {id_param_name => id}.merge(params)
-    ret = get(get_params).body
+    response = get(get_params)
+    ret = response.body
     begin
       filter(JSON.parse(ret))
     rescue JSON::ParserError
-      puts "Error parsing: #{ret}"
+      puts "Response: #{response.inspect}"
       puts "Params: #{get_params}"
       raise
     end
@@ -125,8 +128,28 @@ class DividendoCrawler::Base
     :all
   end
 
+  ClearLineEscape = "\r\e[K".freeze
+
   def get(prms)
-    connection.get("#{path}#{encode_params(prms)}")
+    response = nil
+    retries = 0
+    exponential_backoff = 2
+    begin
+      response = connection.get("#{path}#{encode_params(prms)}")
+      raise EmptyBodyError if response.body.to_s.empty? && (200..299).cover?(response.status) && retries <= 8
+
+      response
+    rescue EmptyBodyError => e
+      retries += 1
+
+      timeout = 2 ** retries * 0.5
+
+      puts "#{ClearLineEscape}Empty body received, retrying in #{timeout}. Attempt ##{retries}..."
+
+      sleep(timeout)
+
+      retry
+    end
   end
 
   private
