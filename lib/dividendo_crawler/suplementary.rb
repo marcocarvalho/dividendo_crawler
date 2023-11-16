@@ -23,7 +23,7 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
   end
 
   def type_to_number(type, asset_type)
-    return "11" if asset_type.upcase == "UNT"
+    return "11" if %w(UNT CDA).include?(asset_type.upcase)
 
     {
       "OR" => "3",
@@ -37,7 +37,7 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
   end
 
   def type_to_type_stock(type, asset_type)
-    return "UNT" if asset_type.upcase == "UNT"
+    return "UNT" if %w(UNT CDA).include?(asset_type.upcase)
 
     {
       "OR" => "ON",
@@ -84,7 +84,7 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
     # DEBENTURES CONVERSIVEIS EM ACOES PREFERENCIAS -> DBP
     # CERTIFICADO DE DEPOSITO DE VALORES MOBILIARIOS -> BDR
     # ?????? -> DCP
-    %w(DBM DBS CDA DBO DBP BDR).include?(asset_type.upcase)
+    %w(DBM DBS DBO DBP BDR).include?(asset_type.upcase)
   end
 
   def multiplier(factor, label)
