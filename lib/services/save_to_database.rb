@@ -15,7 +15,7 @@ class Services::SaveToDatabase
       progressbar.increment
       File.unlink(file)
     end
-    %x{pg_dump -U root -F c b3 -f $(date +%A |  tr '[:upper:]' '[:lower:]').pg.dump}
+    %x{pg_dump -U root -F c b3 -f /Users/marcocarvalho/b3/data/$(date +%A |  tr '[:upper:]' '[:lower:]').pg.dump}
   end
 
   def list
