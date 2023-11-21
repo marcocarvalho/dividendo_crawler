@@ -187,6 +187,7 @@ require_relative "services"
 #   approved_on timestamp,
 #   last_date_prior timestamp,
 #   rate numeric not null,
+#   last_12_month_dividend_yield numeric,
 #   payment_date timestamp NOT NULL,
 #   asset_issued text NOT NULL,
 #   trading_code text not null,

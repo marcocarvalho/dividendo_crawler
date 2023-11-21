@@ -32,7 +32,8 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
       "PA" => "5",
       "PB" => "6",
       "PC" => "7",
-      "PD" => "8"
+      "PD" => "8",
+      "PE" => "9",
     }[type]
   end
 
@@ -46,7 +47,8 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
       "PA" => "PNA",
       "PB" => "PNB",
       "PC" => "PNC",
-      "PD" => "PND"
+      "PD" => "PND",
+      "PE" => "PNE",
     }[type]
   end
 
@@ -130,6 +132,7 @@ class DividendoCrawler::Suplementary < DividendoCrawler::Base
     trading_code, type_stock = asset_issued(item["assetIssued"].presence || item["isinCode"])
     item["trading_code"] = trading_code
     item["typeStock"] = type_stock
+    item["last_12_month_dividend_yield"] = Models::CashDividend.sum_dividend_yield(trading_code, (Date.parse(item["approvedOn"]) - 1.year)..Date.parse(item["approvedOn"]))
     item
   end
 

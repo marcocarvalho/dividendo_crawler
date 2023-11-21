@@ -30,6 +30,7 @@ class Services::DividendToCSV
       rate
       label
       relatedTo
+      last_12_month_dividend_yield
     )
   end
 end
